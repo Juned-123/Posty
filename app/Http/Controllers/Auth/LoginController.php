@@ -12,12 +12,13 @@ class LoginController extends Controller
     }
     
     public function store(Request $request) {
+
         $request->validate([
             'email'=> 'required|email',
             'password'=> 'required',
         ]);
 
-        if (!auth()->attempt($request->only('email','password'))) {
+        if (!auth()->attempt($request->only('email','password'),$request->remember)) {
             return back()->with('status','Invalid login details');
         }
 
